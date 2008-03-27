@@ -45,4 +45,6 @@ dy= lm(2,:) - x(2);
 phi= x(3);
 z= [sqrt(dx.^2 + dy.^2);
     atan2(dy,dx) - phi];
+
+z(2,:)= pi_to_pi(z(2,:));
     

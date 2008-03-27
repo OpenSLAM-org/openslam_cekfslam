@@ -25,7 +25,7 @@ end
 %
 function add_one_z(z,R)
 
-global XA PA PhiPAB JXA
+global XA PA PhiPAB JXA PAB
 
 len= length(XA);
 r= z(1); b= z(2);
@@ -58,4 +58,10 @@ end
 JXA = zeros(1);
 
 %augment PhiPAB
-if size(PhiPAB,1) ~= 1, PhiPAB = [ PhiPAB; Gv*PhiPAB(1:3,:) ]; end
+if size(PhiPAB,1) ~= 1
+    PhiPAB = [ PhiPAB; Gv*PhiPAB(1:3,:) ]; 
+else
+    if size(PAB,1) ~= 1
+        PAB=[ PAB; Gv*PAB(1:3,:) ];
+    end
+end
