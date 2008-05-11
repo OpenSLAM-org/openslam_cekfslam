@@ -26,7 +26,7 @@ end
 %
 function batch_update(z,R,idf)
 
-global XA PA JXA OmegaPB PsiXB PhiPAB
+global XA PA JXA OmegaPB PsiXB PhiPAB XB
 
 lenz= size(z,2);
 lenXA= length(XA);
@@ -60,23 +60,25 @@ PA = PA - make_symmetric(W*S*W');
 %PSD_check= chol(PA);
 
 % calculate OmegaPB PsiXB PhiPAB
-if size(OmegaPB,1) == 1        
-    OmegaPB = JXA'*Kappa*JXA;
-    PsiXB = JXA'*H'*Si*v;
-    PhiPAB = (eye(size(XA,1)) - Zeta)*JXA;    
-else
-    OmegaPB = OmegaPB + PhiPAB'*JXA'*Kappa*JXA*PhiPAB;
-    PsiXB = PsiXB + PhiPAB'*JXA'*H'*Si*v;
-    PhiPAB = ((eye(size(XA,1)) - Zeta)*JXA)*PhiPAB;        
-end   
-JXA = zeros(1); % 
+if length(XB)~=1
+    if size(OmegaPB,1) == 1        
+        OmegaPB = JXA'*Kappa*JXA;
+        PsiXB = JXA'*H'*Si*v;
+        PhiPAB = (eye(size(XA,1)) - Zeta)*JXA;    
+    else
+        OmegaPB = OmegaPB + PhiPAB'*JXA'*Kappa*JXA*PhiPAB;
+        PsiXB = PsiXB + PhiPAB'*JXA'*H'*Si*v;
+        PhiPAB = ((eye(size(XA,1)) - Zeta)*JXA)*PhiPAB;        
+    end   
+    JXA = zeros(1); % 
+end
 
 %
 %
 %
 function single_update(z,R,idf)
 
-global XA PA JXA OmegaPB PsiXB PhiPAB
+global XA PA JXA OmegaPB PsiXB PhiPAB XB
 
 lenz= size(z,2);
 for i=1:lenz
@@ -108,19 +110,20 @@ for i=1:lenz
     %%%
     
     % calculateOmegaPB PsiXB PhiPAB
-    if size(OmegaPB,1) == 1        
-        OmegaPB = JXA'*Kappa*JXA;
-        PsiXB = JXA'*H'*Si*v;
-        PhiPAB = (eye(size(XA,1)) - Zeta)*JXA;
-    else
-        OmegaPB = OmegaPB + PhiPAB'*JXA'*Kappa*JXA*PhiPAB;
-        PsiXB = PsiXB + PhiPAB'*JXA'*H'*Si*v;
-        PhiPAB = ((eye(size(XA,1)) - Zeta)*JXA)*PhiPAB;        
+    if length(XB) ~= 1
+        if size(OmegaPB,1) == 1        
+            OmegaPB = JXA'*Kappa*JXA;
+            PsiXB = JXA'*H'*Si*v;
+            PhiPAB = (eye(size(XA,1)) - Zeta)*JXA;
+        else
+            OmegaPB = OmegaPB + PhiPAB'*JXA'*Kappa*JXA*PhiPAB;
+            PsiXB = PsiXB + PhiPAB'*JXA'*H'*Si*v;
+            PhiPAB = ((eye(size(XA,1)) - Zeta)*JXA)*PhiPAB;        
+        end
+        JXA = eye(size(JXA));
     end
-    JXA = eye(size(JXA));
 end
 JXA = zeros(1); % 
-
 
 function P= make_symmetric(P)
 P= (P+P')*0.5;

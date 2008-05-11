@@ -49,7 +49,8 @@ function data= cekfslam(lm, wp)
 %   probably diverge.
 %
 % Zhang Haiqiang 2007-11-20
-% 
+% Zhang Haiqiang 2007-5-11
+%
 
 format compact
 configfile;
@@ -316,10 +317,23 @@ end
 
 function p= make_ellipse(x,P,s, phi)
 % make a single 2-D ellipse of s-sigmas over phi angle intervals 
+s=2.448; %corresponding cdf is 0.95
 r= sqrtm(P);
 a= s*r*[cos(phi); sin(phi)];
 p(2,:)= [a(2,:)+x(2) NaN];
 p(1,:)= [a(1,:)+x(1) NaN];
+
+% % Use the following codes for a naive and visually better ellipse
+% cdf=0.95;
+% k=sqrt( -2*log(1-cdf) );
+% px=P(1,1);py=P(2,2);pxy=P(1,2);
+% if px==py,theta=pi/4; else theta=1/2*atan(2*pxy/(px-py));end
+% r1=px*cos(theta)^2 + py*sin(theta)^2 + pxy*sin(2*theta);
+% r2=px*sin(theta)^2 + py*cos(theta)^2 - pxy*sin(2*theta);
+% T=[cos(theta) -sin(theta); sin(theta) cos(theta) ];
+% pts=k*T*[sqrt(r1) 0; 0 sqrt(r2)]*[cos(phi); sin(phi)];
+% p(1,:)=[pts(1,:)+x(1) NaN];
+% p(2,:)=[pts(2,:)+x(2) NaN];
 
 %
 %

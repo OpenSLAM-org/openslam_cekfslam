@@ -40,7 +40,7 @@ SWITCH_INFLATE_NOISE= 0; % if 1, the estimated Q and R are inflated (ie, add sta
 SWITCH_SEED_RANDOM= 1; % if not 0, seed the randn() with its value at beginning of simulation (for repeatability)
 SWITCH_BATCH_UPDATE= 0; % if 1, process scan in batch, if 0, process sequentially
 
-SWITCH_PROFILE=1;
+SWITCH_PROFILE=0;
 SWITCH_VISULIZE_THE_EVOLUTION_OF_COVARIANCE_DIAG = 0;
 SWITCH_OFFLINE_DATA_ON = 1;
 SWITCH_ANIMATION_ON = 1;

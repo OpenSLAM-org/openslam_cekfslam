@@ -16,9 +16,10 @@ function predict (Vn,Wn,QE, dt)
 %           two updates
 %
 %   Zhang Haiqiang 2007-11-20
+%   Zhang Haiqiang 2008-5-11
 %
 
-global XA PA JXA
+global XA PA JXA XB
 
 s = sin(XA(3));
 c = cos(XA(3));
@@ -59,11 +60,14 @@ end
 % predict XA
 XA(1:3) = xv_p;
 
-%
-current_JXA = eye(size(PA,1));
-current_JXA(1:3,1:3) = Gv;
-if size(JXA,1) == 1
-    JXA = current_JXA;
-else
-    JXA = current_JXA*JXA;
+% calculate JXA(the predict auxiliary  coefficient for PAB)
+if length(XB)~=1
+    current_JXA = eye(size(PA,1));
+    current_JXA(1:3,1:3) = Gv;
+    if size(JXA,1) == 1
+        JXA = current_JXA;
+    else
+        JXA = current_JXA*JXA;
+    end
 end
+

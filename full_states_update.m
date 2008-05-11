@@ -7,6 +7,8 @@ function full_states_update()
 % GLOBAL OUTPUTS:
 %   XB PAB PB PsiXB PhiPAB OmegaPB
 %
+% Haiqiang Zhang 2008-5-11
+%
 
 global XB PAB PB PsiXB PhiPAB OmegaPB JXA
 
@@ -17,9 +19,14 @@ if size(XB,1) ~= 1 && size(OmegaPB,1) ~= 1
     PAB = PhiPAB*PAB;
 end
 
-% reset auxiliary coef.
+% reset the update auxiliary coef.
 PsiXB= zeros(1);
 OmegaPB= zeros(1);
 PhiPAB= zeros(1);
-JXA= zeros(1);
+
+% handle only predict exists
+if size(JXA,1)~=1 
+    PAB=JXA*PAB;
+    JXA= zeros(1);
+end
 

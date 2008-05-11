@@ -12,8 +12,10 @@ function augment(z,R)
 % GLOBAL OUTPUTS:
 %   XA, PA
 %   PhiPAB
-%   JXA - reset
+%   JXA - If valid, use it and then reset
 %
+%
+% Haiqiang Zhang 2008-5-11
 
 % add new features to state
 for i=1:size(z,2)
@@ -54,14 +56,19 @@ if len>3
     PA(rnm,rng)= PA(rng,rnm)';
 end
 
-% reset JXA
-JXA = zeros(1);
-
 %augment PhiPAB
 if size(PhiPAB,1) ~= 1
+    if size(JXA,1)~=1
+        PhiPAB=JXA*PhiPAB;
+        JXA=zeros(1);
+    end
     PhiPAB = [ PhiPAB; Gv*PhiPAB(1:3,:) ]; 
 else
     if size(PAB,1) ~= 1
+        if size(JXA,1)~=1
+            PAB=JXA*PAB;
+            JXA=zeros(1);
+        end
         PAB=[ PAB; Gv*PAB(1:3,:) ];
     end
 end

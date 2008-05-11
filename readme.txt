@@ -10,6 +10,11 @@ To run this simulator:
 =========================================
 
 +++++++++++++++++++++++++++++++++++++++++
+2008-5-11
+--Fix bugs when dealing with JXA.
+--The covariance ellipses are drawn by a more visually convincingly manner.
+
+
 2008-3-27
 I'm working on the data association.
 
