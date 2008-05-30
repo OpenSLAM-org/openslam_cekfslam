@@ -10,7 +10,7 @@ function full_states_update()
 % Haiqiang Zhang 2008-5-11
 %
 
-global XB PAB PB PsiXB PhiPAB OmegaPB JXA
+global XB PAB PB PsiXB PhiPAB OmegaPB
 
 if size(XB,1) ~= 1 && size(OmegaPB,1) ~= 1
     % update part B
@@ -23,10 +23,3 @@ end
 PsiXB= zeros(1);
 OmegaPB= zeros(1);
 PhiPAB= zeros(1);
-
-% handle only predict exists
-if size(JXA,1)~=1 
-    PAB=JXA*PAB;
-    JXA= zeros(1);
-end
-

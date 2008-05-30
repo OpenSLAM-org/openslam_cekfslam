@@ -172,7 +172,19 @@ while iwp ~= 0
         [zf,idf, zn]= data_associate(XA,PA,z,RE, GATE_REJECT, GATE_AUGMENT); 
         check_data_association(idf);        
         
-        if size(zf,1) > 0, update(zf,RE,idf,SWITCH_BATCH_UPDATE); end
+        if size(zf,1) > 0
+            update(zf,RE,idf,SWITCH_BATCH_UPDATE); 
+        else
+            if size(PAB,1) ~= 1
+                if size(PhiPAB,1) ~= 1
+                    PhiPAB=JXA*PhiPAB;
+                else
+                    PAB=JXA*PAB;
+                end
+                JXA=zeros(1);
+            end
+        end
+        
         if size(zn,1) >0, augment(zn,RE); end
         
         if switch_active_local_area(RESTRICING_ALA_R) ~= 0

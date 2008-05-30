@@ -12,7 +12,6 @@ function augment(z,R)
 % GLOBAL OUTPUTS:
 %   XA, PA
 %   PhiPAB
-%   JXA - If valid, use it and then reset
 %
 %
 % Haiqiang Zhang 2008-5-11
@@ -27,7 +26,7 @@ end
 %
 function add_one_z(z,R)
 
-global XA PA PhiPAB JXA PAB
+global XA PA PhiPAB PAB
 
 len= length(XA);
 r= z(1); b= z(2);
@@ -57,18 +56,10 @@ if len>3
 end
 
 %augment PhiPAB
-if size(PhiPAB,1) ~= 1
-    if size(JXA,1)~=1
-        PhiPAB=JXA*PhiPAB;
-        JXA=zeros(1);
-    end
-    PhiPAB = [ PhiPAB; Gv*PhiPAB(1:3,:) ]; 
-else
-    if size(PAB,1) ~= 1
-        if size(JXA,1)~=1
-            PAB=JXA*PAB;
-            JXA=zeros(1);
-        end
-        PAB=[ PAB; Gv*PAB(1:3,:) ];
+if size(PAB,1) ~= 1
+    if size(PhiPAB,1) ~= 1
+        PhiPAB = [PhiPAB; Gv*PhiPAB(1:3,:)];
+    else
+        PAB=[PAB; Gv*PAB(1:3,:)];
     end
 end
