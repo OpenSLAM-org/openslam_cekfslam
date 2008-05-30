@@ -28,7 +28,8 @@ cp = cos(XA(3) + Wn*dt);
 vt = Vn*dt;
 wt = Wn*dt;
 
-if abs(Wn) < 1e-3
+%if abs(Wn) < 1e-3
+if isinf(1.0/Wn)
     xv_p = [ XA(1) + vt*c;
                  XA(2) + vt*s;
                  pi_to_pi( XA(3) ) ];
